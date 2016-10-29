@@ -1,3 +1,4 @@
+/* Do not remove this comment: image_listing file, can be overwritten by generate.py */
 var currentImageIndex = 0;
 var listingVisible = true;
 
