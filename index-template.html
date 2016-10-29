@@ -1,50 +1,41 @@
+<!-- This template expects three input values to be replaced:
+       ${PATH_TO_ROOT} should be replaced with the relative path to the root
+         directory (e.g., ../../), and should be empty or end with "/".
+       ${IMAGE_NAMES} should be the list of image names found in the current
+         directory, enclosed in quotation marks and separated by commas (e.g.,
+         "a.jpg", "b.jpg").
+       ${DIR_NAMES} should similarly be the list of child directory names
+         found in the current directory, in the same format as IMAGE_NAMES.
+-->
 <html>
 <head>
 
 <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 
-<style>
-#img-container {
- width: 100%;
-}
+<link rel="stylesheet" type="text/css" href="${PATH_TO_ROOT}html/style.css">
 
-#img-elem {
- width: 100%;
-}
-</style>
+<!-- Use a local copy instead of https://hammerjs.github.io/dist/hammer.min.js
+     to have a pinned version, guarantee of availability, and reduction in
+     man-in-the-middle attack possibilities. -->
+<script src="${PATH_TO_ROOT}hammer.min.js"></script>
 
-<script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
 <script>
-var kImageNames = [ "a.jpg", "b.jpg" ];
-var currentImageIndex = 0;
-
-function rotateImages(offset) {
-  currentImageIndex = (currentImageIndex + offset) % kImageNames.length;
-  while (currentImageIndex < 0) currentImageIndex += kImageNames.length;
-  document.getElementById("img-elem").src = kImageNames[currentImageIndex];
-}
-
-function init() {
-  rotateImages(0);
-
-  var hammertime = new Hammer(document.getElementById("img-elem"));
-  hammertime.on('swipe', function(ev) {
-    rotateImages((ev.deltaX > 0)?-1:1);
-  });
-
-  hammertime.get('tap').set({ enable: false });
-  hammertime.get('doubletap').set({ enable: false });
-  hammertime.get('press').set({ enable: false });
-}
-
-window.onload = init;
+var kImageNames = [ ${IMAGE_NAMES} ];
+var kDirNames = [ ${DIR_NAMES} ];
 </script>
+<script src="${PATH_TO_ROOT}html/gesture_handling.js"></script>
 
 </head>
 
 <body>
-<div id="img-container">
-<img id="img-elem">
+<div id="listing-container">
+  <div id="dir-listing-container">
+  </div>
+  <div id="thumbnails-container">
+  </div>
+</div>
+<div id="img-container" hidden>
+  <img id="img-elem">
 </div>
 </body>
 
