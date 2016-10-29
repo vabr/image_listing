@@ -1,8 +1,26 @@
-Image Listing
+The goal of the project is to provide useful directory listings for webservers
+serving directories with images.
 
-The project provides an image listing script for viewing static directories
-with images on web servers.
+It consists of a script which can generate such listings as a static HTML with
+some JavaScript and styling. This script takes the directory tree root as
+input, crawls each directory to get a list of images stored in it, and writes
+the listing as index.html in it.
 
-License
-The project is currently private. It is not allowed to use it and not possible
-to contribute to it yet.
+The listing is largely based on the template also included in this project.
+The input to the template is the list of image file names, and child
+directories names. The script substitutes these values in the template to
+generate the appropriate listing in each directory.
+
+The image listing allows these actions:
+* On load, it shows links to the parent and child directories, and thumbnails
+  of the images. NOT IMPLEMENTED
+  * TODO: Consider whether to also generate thumbnails on the fly.
+    + Pros are the speed of loading them.
+    - Cons are the need to store them, the additional code complexity, and the
+      need to load the full images later.
+* On tapping an image thumbnail, the image is displayed on the full width of
+  the screen. Swiping left and right cycles between the images. Swiping up
+  goes back into the listing view. NOT IMPLEMENTED
+
+For swiping, https://hammerjs.github.io/ is used. A fixed version of it is
+kept as third_party in the project.
