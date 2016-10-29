@@ -13,14 +13,14 @@ generate the appropriate listing in each directory.
 
 The image listing allows these actions:
 * On load, it shows links to the parent and child directories, and thumbnails
-  of the images. NOT IMPLEMENTED
+  of the images.
   * TODO: Consider whether to also generate thumbnails on the fly.
     + Pros are the speed of loading them.
     - Cons are the need to store them, the additional code complexity, and the
       need to load the full images later.
 * On tapping an image thumbnail, the image is displayed on the full width of
-  the screen. Swiping left and right cycles between the images. Swiping up
-  goes back into the listing view. NOT IMPLEMENTED
+  the screen. Swiping left and right cycles between the images. Tapping
+  goes back into the listing view.
 
 For swiping, https://hammerjs.github.io/ is used. A fixed version of it is
 kept as third_party in the project.

@@ -21,17 +21,51 @@ function populateDirs() {
   }
 }
 
+function SetListingsVisibility(visible) {
+  document.getElementById("listing-container").hidden = !visible;
+  document.getElementById("img-container").hidden = visible;
+}
+
+/* Populates thumbnails-container. */
+function populateThumbnails() {
+  var container = document.getElementById("thumbnails-container");
+  for (var i = 0; i < kImageNames.length; ++i) {
+    var btn = document.createElement("BUTTON");
+    btn.classList.add("thumbnail");
+    (function(idx) {
+    btn.onclick = function() {
+      currentImageIndex = idx;
+      rotateImages(0); 
+      SetListingsVisibility(false);
+    };
+    })(i);
+    var img = document.createElement("IMG");
+    img.src = kImageNames[i];
+    btn.appendChild(img);
+    container.appendChild(btn);
+  }
+}
+
 function init() {
   populateDirs();
 
   if (kImageNames.length == 0)
     return;
+
+  populateThumbnails();
+
   rotateImages(0);
 
-  var hammertime = new Hammer(document.getElementById("img-elem"));
+  var image = document.getElementById("img-elem");
+  var hammertime = new Hammer(image);
   hammertime.on('swipe', function(ev) {
     rotateImages((ev.deltaX > 0)?-1:1);
   });
+
+  image.onclick = function(ev) {
+    SetListingsVisibility(true);
+    return true;
+  };
 
   hammertime.get('tap').set({ enable: false });
   hammertime.get('doubletap').set({ enable: false });

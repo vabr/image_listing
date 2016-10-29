@@ -5,3 +5,11 @@
 #img-elem {
  width: 100%;
 }
+
+img {
+ width: 100%;
+}
+
+button.thumbnail {
+ width: 20%;
+}
