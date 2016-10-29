@@ -1,4 +1,5 @@
 var currentImageIndex = 0;
+var listingVisible = true;
 
 /* In the loop of images to show, rotates by |offset|. */
 function rotateImages(offset) {
@@ -22,6 +23,7 @@ function populateDirs() {
 }
 
 function SetListingsVisibility(visible) {
+  listingVisible = visible;
   document.getElementById("listing-container").hidden = !visible;
   document.getElementById("img-container").hidden = visible;
 }
@@ -65,6 +67,15 @@ function init() {
   image.onclick = function(ev) {
     SetListingsVisibility(true);
     return true;
+  };
+
+  document.body.onkeydown = function(ev) {
+    if (listingVisible)
+      return;
+    if (ev.which == 37 /* ArrowLeft */)
+      rotateImages(-1);
+    if (ev.which == 39 /* ArrowRight */)
+      rotateImages(1);
   };
 
   hammertime.get('tap').set({ enable: false });
