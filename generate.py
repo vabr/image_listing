@@ -88,11 +88,20 @@ def main():
   directory_queue = os.walk(args.target_dir, topdown=True, followlinks=False)
   # The path from |current_dir| below to |args.target|.
   relative_root = ""
-  for (current_dir, dirs, files) in directory_queue:
+  for (current_dir, subdirs, files) in directory_queue:
     # Determine the relative path to the root. Here it is important that the
     # search is breadth-first.
     if os.path.normpath(os.path.join(current_dir, relative_root)) != os.path.normpath(args.target_dir):
       relative_root += "../"
+    # Except for the root directiry, ".." should be included in the links to
+    # directories. It is important not to change |subdirs|; while |dirs|
+    # remain read-only after this (so it's OK to let them share the
+    # reference), concatenating the ".." would result in adding .. to the
+    # os.walk sequence.
+    if relative_root:
+      dirs = [".."] + subdirs
+    else:
+      dirs = subdirs
     # Determine the list of images.
     images = []
     for name in files:
