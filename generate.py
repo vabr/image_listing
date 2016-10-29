@@ -26,6 +26,15 @@ def IsGenerated(filename):
   #TODO: Implement the check based on substring stamp put into generated files.
   return True;
 
+# Returns True iff |name| is a name of an image file.
+def IsImage(name):
+  (_, extension) = os.path.splitext(name)
+  result = extension.lower() in [ ".jpg", ".jpeg", ".png", ".tif" ]
+  if not result:
+    #TODO: Remove this once the list of extensions is reasonable.
+    print "{} is not an image".format(name)
+  return result
+
 def main():
   # Check the arguments.
   parser = argparse.ArgumentParser(description='Generate image listings.')
@@ -58,15 +67,25 @@ def main():
       shutil.copy(src_file_path, dest_file_path)
 
   # Start a breadth-first-search in the target directory:
-  # directory_queue = [ (target, 0) ]
-  # while directory_queue:
-  #   (current_dir, depth) = directory_queue.pop()
-  #   Determine the relative path to the root.
-  #   Determine the child directories.
-  #   directory_queue += list_of_children
-  #   Determine the list of images.
-  #   Instantiate the template with the three determined lists and copy it
-  #     into the current directory.
+  if not os.path.isdir(args.target_dir):
+    sys.exit("The target directory {} is missing".format(args.target_dir))
+  directory_queue = os.walk(args.target_dir, topdown=True, followlinks=False)
+  # The path from |current_dir| below to |args.target|.
+  relative_root = ""
+  for (current_dir, dirs, files) in directory_queue:
+    # Determine the relative path to the root. Here it is important that the
+    # search is breadth-first.
+    if os.path.normpath(os.path.join(current_dir, relative_root)) != os.path.normpath(args.target_dir):
+      relative_root += "../"
+    # Determine the list of images.
+    images = []
+    for name in files:
+      if IsImage(name):
+        images.append(name)
+    if args.dry_run:
+      print "Instantiate template with relative path = {}, dirs = {} and images = {}".format(relative_root, dirs, images)
+    else:
+      pass  #TODO: Implement the instantiation and copy it into the current directory.
 
 if __name__ == "__main__":
   main()
