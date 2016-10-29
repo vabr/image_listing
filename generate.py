@@ -23,6 +23,7 @@ def main():
   #   Determine the list of images.
   #   Instantiate the template with the three determined lists and copy it
   #     into the current directory.
+  pass
 
 if __name__ == "__main__":
-    main()
+  main()
