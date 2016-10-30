@@ -81,17 +81,17 @@ def main():
     else:
       shutil.copy(src_file_path, dest_file_path)
 
-  # Start a breadth-first-search in the target directory:
+  # Start a search in the target directory:
   if not os.path.isdir(args.target_dir):
     sys.exit("The target directory {} is missing".format(args.target_dir))
   directory_queue = os.walk(args.target_dir, topdown=True, followlinks=False)
   # The path from |current_dir| below to |args.target|.
-  relative_root = ""
   for (current_dir, subdirs, files) in directory_queue:
-    # Determine the relative path to the root. Here it is important that the
-    # search is breadth-first.
-    if os.path.normpath(os.path.join(current_dir, relative_root)) != os.path.normpath(args.target_dir):
+    # Determine the relative path to the root.
+    relative_root = ""
+    while os.path.normpath(os.path.join(current_dir, relative_root)) != os.path.normpath(args.target_dir):
       relative_root += "../"
+    print "Relative root = {} for current = {}".format(relative_root, current_dir)
     # Except for the root directiry, ".." should be included in the links to
     # directories. It is important not to change |subdirs|; while |dirs|
     # remain read-only after this (so it's OK to let them share the
