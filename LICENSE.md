@@ -1,11 +1,13 @@
-/* Do not remove this comment: image_listing file, can be overwritten by generate.py */
+The libraries included in third\_party are covered by their respective
+licenses, included with their code.
 
-/*
+For everything outside of third\_party:
+
 Copyright 2016 Vaclav Brozek
 
    Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+   you may not use the content of this repository except in compliancer
+   with the License. You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
@@ -14,24 +16,3 @@ Copyright 2016 Vaclav Brozek
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
-
-/*
-Style definitions for the listing page.
-*/
-
-#img-container {
- width: 100%;
-}
-
-#img-elem {
- width: 100%;
-}
-
-img {
- width: 100%;
-}
-
-button.thumbnail {
- width: 20%;
-}
